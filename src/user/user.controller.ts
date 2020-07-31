@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Logger } from '@nestjs/common';
 import * as Joi from 'joi';
-import { ValidationError } from 'joi';
+//import { ValidationError } from 'joi';
 
 import { Response, ResponseMessage } from '../util/response.util';
 import { loginSchema, registerSchema } from './user.schema';
@@ -48,4 +48,5 @@ export class UserController {
     return new ResponseMessage().success().body(user).build();
 
   }
+
 }

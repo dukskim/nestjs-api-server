@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, JoinTable } from 'typeorm';
+import { Test } from '../entities/test.entity';
 
 @Entity({ name: 'user', schema: 'dhkim' })
 export class User {
 
-  @PrimaryGeneratedColumn({ name: 'user_id' })
+  @PrimaryGeneratedColumn({ name: 'user_id', type: 'bigint' })
   id: number;
 
   @Column({ length: 40 })
@@ -18,7 +19,7 @@ export class User {
   @Column({ length: 100 })
   password: string;
 
-  @Column('datetime', { name: 'last_login_date' })
+  @Column('datetime', { name: 'last_login_date', nullable: true })
   lastLoginDate: Date;
 
   @CreateDateColumn({ name: 'created_at' })
@@ -27,4 +28,7 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updateDate: Date;
 
+  //@OneToOne(type => Test, test => test.userId)
+  //test: Test;
 }
+
