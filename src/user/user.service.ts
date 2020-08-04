@@ -29,9 +29,7 @@ export class UserService {
         email: loginUser.email
       }
     });
-
-    const passwordCheck = loginUser.password === user.password ? true : false;
-    if (!passwordCheck) {
+    if (!user || loginUser.password != user.password) {
       return null;
     }
     user.lastLoginDate = new Date();
