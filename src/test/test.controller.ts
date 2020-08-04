@@ -1,14 +1,19 @@
-import { Controller, Get, Param, Req, Query, Logger } from '@nestjs/common';
+import { Controller, Get, Param, Req, Query, Logger, HttpStatus } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiQuery, ApiParam, ApiOperation } from '@nestjs/swagger';
 import * as Joi from 'joi';
+import { Request } from 'express';
 
 import { Response, ResponseMessage } from '../util/response.util';
 import { TestService } from './test.service';
-import { Request } from 'express';
 
+@ApiTags('test')
 @Controller('test')
 export class TestController {
   constructor(private readonly testServie: TestService){}
 
+  @ApiParam({ name: 'id' })
+  @ApiOperation({ description: 'Test Get Path Param'})
+  @ApiResponse({status:  HttpStatus.OK, description: 'Ok', type: Response})
   @Get('test/:id')
   public async test(@Param() params): Promise<Response> {
     console.log(params.id);
@@ -22,6 +27,7 @@ export class TestController {
   }
 
   @Get('test3')
+  @ApiQuery({ name: 'id'})
   public async test3(@Req() request: Request): Promise<Response> {
     console.log(request.query.id);
     return null;
