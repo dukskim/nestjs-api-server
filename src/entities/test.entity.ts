@@ -1,9 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinTable, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'test', schema: 'dhkim' })
 export class Test {
 
+  @ApiProperty({ name: 'id' })
   @PrimaryGeneratedColumn({ name: 'test_id' })
   testId: number;
 

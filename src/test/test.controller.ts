@@ -1,10 +1,11 @@
-import { Controller, Get, Param, Req, Query, Logger, HttpStatus } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiQuery, ApiParam, ApiOperation } from '@nestjs/swagger';
+import { Controller, Get, Param, Req, Query, Logger, HttpStatus, Post, Body } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiQuery, ApiParam, ApiOperation, ApiBody, ApiProperty } from '@nestjs/swagger';
 import * as Joi from 'joi';
-import { Request } from 'express';
+import { Request, json } from 'express';
 
 import { Response, ResponseMessage } from '../util/response.util';
 import { TestService } from './test.service';
+import { Test } from '../entities/test.entity';
 
 @ApiTags('test')
 @Controller('test')
@@ -13,7 +14,7 @@ export class TestController {
 
   @ApiParam({ name: 'id' })
   @ApiOperation({ description: 'Test Get Path Param'})
-  @ApiResponse({status:  HttpStatus.OK, description: 'Ok', type: Response})
+  @ApiResponse({status:  HttpStatus.OK, description: 'Ok', schema: {example: { code: 1, data: {id: 'aa'} }}})
   @Get('test/:id')
   public async test(@Param() params): Promise<Response> {
     console.log(params.id);
@@ -26,8 +27,8 @@ export class TestController {
     return null;
   }
 
-  @Get('test3')
   @ApiQuery({ name: 'id'})
+  @Get('test3')
   public async test3(@Req() request: Request): Promise<Response> {
     console.log(request.query.id);
     return null;
@@ -38,6 +39,16 @@ export class TestController {
     console.log(id);
     return null;
   }
+
+  //@ApiBody({type: json, schema:{example: {id:'aad'}}, description:'aaa'})
+  //@ApiBody({ type: Test })
+  @ApiResponse({schema: {example: {id:'aa'}}})
+  @Post('ptest1')
+  public async ptest1(@Body() param: Test/*Map<string,object>*//*: object*/): Promise<Response> {
+    console.log(param);
+    return null;
+  }
+
 
   @Get('testUsers/:id')
   public async testUsers(@Param('id') id): Promise<Response> {
